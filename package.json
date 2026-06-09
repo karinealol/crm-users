@@ -1,0 +1,16 @@
+{
+  "name": "crm-contatos",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CRM de contatos — frontend TypeScript puro, sem libs de runtime, dados em localStorage.",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "serve": "npx --yes serve .",
+    "dev": "tsc -w"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0"
+  }
+}
