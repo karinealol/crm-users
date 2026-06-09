@@ -51,7 +51,7 @@ export class Toolbar {
     for (const s of CONTACT_STATUSES) makeChip(s, STATUS_LABELS[s]);
 
     // Export / Import
-    const exportBtn = el('button', { class: 'btn btn--ghost btn--sm', type: 'button', text: 'Exportar' });
+    const exportBtn = el('button', { class: 'btn btn--ghost', type: 'button', text: 'Exportar' });
     exportBtn.addEventListener('click', cb.onExport);
 
     const fileInput = el('input', { type: 'file', accept: 'application/json', hidden: true }) as HTMLInputElement;
@@ -60,7 +60,7 @@ export class Toolbar {
       if (file) cb.onImport(file);
       fileInput.value = '';
     });
-    const importBtn = el('button', { class: 'btn btn--ghost btn--sm', type: 'button', text: 'Importar' });
+    const importBtn = el('button', { class: 'btn btn--ghost', type: 'button', text: 'Importar' });
     importBtn.addEventListener('click', () => fileInput.click());
 
     const backup = el('div', { class: 'toolbar__backup' }, [exportBtn, importBtn, fileInput]);
