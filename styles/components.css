@@ -586,6 +586,14 @@ textarea.cform__input {
 .cform__error:empty {
   display: none;
 }
+.cform__hint {
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
+  line-height: 1.4;
+}
+.cform__hint[hidden] {
+  display: none;
+}
 
 .cform__actions {
   display: flex;

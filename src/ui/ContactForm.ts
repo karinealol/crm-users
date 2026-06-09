@@ -19,28 +19,31 @@ interface FieldDef {
   type: 'text' | 'email' | 'tel' | 'textarea' | 'select';
   placeholder?: string;
   required?: boolean;
+  /** Texto de apoio exibido abaixo do campo enquanto não há erro. */
+  hint?: string;
 }
 
 const FIELDS: FieldDef[] = [
-  { key: 'name', label: 'Nome', type: 'text', placeholder: 'Ana Lima', required: true },
-  { key: 'email', label: 'Email', type: 'email', placeholder: 'ana@empresa.com', required: true },
-  { key: 'phone', label: 'Telefone', type: 'tel', placeholder: '(11) 99999-0000' },
-  { key: 'company', label: 'Empresa', type: 'text', placeholder: 'ACME Inc.' },
-  { key: 'role', label: 'Cargo', type: 'text', placeholder: 'Head de Vendas' },
-  { key: 'status', label: 'Status', type: 'select' },
-  { key: 'notes', label: 'Notas', type: 'textarea', placeholder: 'Contexto, próximos passos…' },
+  { key: 'name', label: 'Nome', type: 'text', placeholder: 'Ana Lima', required: true, hint: 'Nome completo, sem números (2 a 80 caracteres).' },
+  { key: 'email', label: 'Email', type: 'email', placeholder: 'ana@empresa.com', required: true, hint: 'Usado como identificador principal do contato.' },
+  { key: 'phone', label: 'Telefone', type: 'tel', placeholder: '(11) 99999-0000', hint: 'Opcional. Aceita 8 a 20 dígitos, com (), + ou -.' },
+  { key: 'company', label: 'Empresa', type: 'text', placeholder: 'ACME Inc.', hint: 'Organização onde o contato trabalha (até 60 caracteres).' },
+  { key: 'role', label: 'Cargo', type: 'text', placeholder: 'Head de Vendas', hint: 'Função ou cargo atual (até 60 caracteres).' },
+  { key: 'status', label: 'Status', type: 'select', hint: 'Ativo = cliente atual · Inativo = sem relação no momento.' },
+  { key: 'notes', label: 'Notas', type: 'textarea', placeholder: 'Contexto, próximos passos…', hint: 'Anotações internas (até 500 caracteres).' },
 ];
 
 export function renderContactForm(contact: Contact | null, cb: FormCallbacks): HTMLElement {
   const draft: ContactDraft = contact ? toDraft(contact) : emptyDraft();
   let errors: ValidationErrors = {};
 
-  const fieldNodes = new Map<keyof ContactDraft, { input: HTMLElement; error: HTMLElement }>();
+  const fieldNodes = new Map<keyof ContactDraft, { input: HTMLElement; error: HTMLElement; hint: HTMLElement }>();
 
   const form = el('form', { class: 'cform', novalidate: true }) as HTMLFormElement;
 
   for (const def of FIELDS) {
     const errorNode = el('span', { class: 'cform__error', id: `err-${def.key}` });
+    const hintNode = el('span', { class: 'cform__hint', id: `hint-${def.key}`, text: def.hint ?? '' });
     const input = buildControl(def, draft, () => {
       // valida o campo individual ao alterar, se já houve erro nele
       if (errors[def.key]) {
@@ -53,8 +56,9 @@ export function renderContactForm(contact: Contact | null, cb: FormCallbacks): H
       el('label', { class: 'cform__label', for: `f-${def.key}`, text: def.label + (def.required ? ' *' : '') }),
       input,
       errorNode,
+      hintNode,
     ]);
-    fieldNodes.set(def.key, { input, error: errorNode });
+    fieldNodes.set(def.key, { input, error: errorNode, hint: hintNode });
     form.append(field);
   }
 
@@ -66,11 +70,14 @@ export function renderContactForm(contact: Contact | null, cb: FormCallbacks): H
   form.append(actions);
 
   function paintErrors(): void {
-    for (const [key, { input, error }] of fieldNodes) {
+    for (const [key, { input, error, hint }] of fieldNodes) {
       const msg = errors[key];
       input.classList.toggle('is-invalid', !!msg);
       input.setAttribute('aria-invalid', msg ? 'true' : 'false');
+      input.setAttribute('aria-describedby', msg ? `err-${key}` : `hint-${key}`);
       error.textContent = msg ?? '';
+      // O erro substitui o helper text enquanto estiver visível.
+      hint.hidden = !!msg;
     }
   }
 
