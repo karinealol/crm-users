@@ -395,14 +395,6 @@
 .row-actions {
   display: inline-flex;
   gap: var(--sp-1);
-  opacity: 0;
-  transition: opacity var(--transition);
-}
-.table__row:hover .row-actions {
-  opacity: 1;
-}
-.table__row:focus-within .row-actions {
-  opacity: 1;
 }
 .icon-btn {
   display: grid;
