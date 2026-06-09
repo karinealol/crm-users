@@ -33,9 +33,18 @@ export const contactSchema = z.object({
     .trim()
     .refine((v) => v === '' || PHONE_RE.test(v), 'Telefone inválido (use 8 a 20 dígitos).'),
 
-  company: z.string().trim().max(60, 'Nome da empresa muito longo (máx. 60).'),
+  // Opcional: vazio passa; se preenchido, exige no mínimo 3 caracteres.
+  company: z
+    .string()
+    .trim()
+    .max(60, 'Nome da empresa muito longo (máx. 60).')
+    .refine((v) => v === '' || v.length >= 3, 'A empresa deve ter ao menos 3 caracteres.'),
 
-  role: z.string().trim().max(60, 'Cargo muito longo (máx. 60).'),
+  role: z
+    .string()
+    .trim()
+    .max(60, 'Cargo muito longo (máx. 60).')
+    .refine((v) => v === '' || v.length >= 3, 'O cargo deve ter ao menos 3 caracteres.'),
 
   status: z.enum(CONTACT_STATUSES as unknown as [string, ...string[]]),
 

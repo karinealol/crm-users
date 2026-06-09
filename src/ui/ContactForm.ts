@@ -27,8 +27,8 @@ const FIELDS: FieldDef[] = [
   { key: 'name', label: 'Nome', type: 'text', placeholder: 'Ana Lima', required: true, hint: 'Nome completo, sem números (2 a 80 caracteres).' },
   { key: 'email', label: 'Email', type: 'email', placeholder: 'ana@empresa.com', required: true, hint: 'Usado como identificador principal do contato.' },
   { key: 'phone', label: 'Telefone', type: 'tel', placeholder: '(11) 99999-0000', hint: 'Opcional. Aceita 8 a 20 dígitos, com (), + ou -.' },
-  { key: 'company', label: 'Empresa', type: 'text', placeholder: 'ACME Inc.', hint: 'Organização onde o contato trabalha (até 60 caracteres).' },
-  { key: 'role', label: 'Cargo', type: 'text', placeholder: 'Head de Vendas', hint: 'Função ou cargo atual (até 60 caracteres).' },
+  { key: 'company', label: 'Empresa', type: 'text', placeholder: 'ACME Inc.', hint: 'Opcional. Se preenchido, de 3 a 60 caracteres.' },
+  { key: 'role', label: 'Cargo', type: 'text', placeholder: 'Head de Vendas', hint: 'Opcional. Se preenchido, de 3 a 60 caracteres.' },
   { key: 'status', label: 'Status', type: 'select', hint: 'Ativo = cliente atual · Inativo = sem relação no momento.' },
   { key: 'notes', label: 'Notas', type: 'textarea', placeholder: 'Contexto, próximos passos…', hint: 'Anotações internas (até 500 caracteres).' },
 ];
