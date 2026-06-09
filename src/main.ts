@@ -22,9 +22,12 @@ function bootstrap(): void {
   const toaster = new Toaster(document.body);
 
   // --- Estrutura estática ---
-  const statsBar = el('div', { class: 'stats' });
+  const statsBar = el('div', { class: 'metrics' });
+  const plusIcon = el('span', { class: 'btn__icon' });
+  plusIcon.innerHTML =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
   const newBtn = el('button', { class: 'btn btn--primary', type: 'button' }, [
-    el('span', { class: 'btn__plus', text: '+' }),
+    plusIcon,
     el('span', { text: 'Novo contato' }),
   ]);
 
@@ -85,15 +88,21 @@ function bootstrap(): void {
   function renderStats(): void {
     const { total, byStatus } = service.stats();
     clear(statsBar);
-    const item = (label: string, value: number, cls = '') =>
-      el('div', { class: `stats__item ${cls}` }, [
-        el('span', { class: 'stats__value', text: String(value) }),
-        el('span', { class: 'stats__label', text: label }),
+    const metric = (label: string, value: number, mod = '', dot = false) =>
+      el('div', { class: `metric ${mod}` }, [
+        el('span', { class: 'metric__value' }, [
+          ...(dot ? [el('span', { class: 'metric__dot' })] : []),
+          el('span', { text: String(value) }),
+        ]),
+        el('span', { class: 'metric__label', text: label }),
       ]);
+    const sep = () => el('span', { class: 'metric__sep', 'aria-hidden': 'true' });
     statsBar.append(
-      item('Total', total),
-      item(STATUS_LABELS.ativo, byStatus.ativo, 'stats__item--ativo'),
-      item(STATUS_LABELS.inativo, byStatus.inativo, 'stats__item--inativo'),
+      metric('Total', total),
+      sep(),
+      metric(STATUS_LABELS.ativo, byStatus.ativo, 'metric--ativo', true),
+      sep(),
+      metric(STATUS_LABELS.inativo, byStatus.inativo, 'metric--inativo', true),
     );
   }
 
