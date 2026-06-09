@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="styles/tokens.css" />
     <link rel="stylesheet" href="styles/layout.css" />
     <link rel="stylesheet" href="styles/components.css" />
+    <!-- Mapeia o specifier "zod" para o build ESM no CDN (sem bundler). -->
+    <script type="importmap">
+      {
+        "imports": {
+          "zod": "https://esm.sh/zod@4.4.3"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="app" class="app"></div>
