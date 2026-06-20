@@ -44,11 +44,3 @@ npx cypress open
 # Rodar todos os testes em modo headless
 npm test
 ```
-
-> Os testes rodam diretamente contra o ambiente hospedado — não é necessário subir o projeto localmente.
-
-## Próximos passos
-
-- Configurar CI/CD com GitHub Actions para execução automática a cada push
-- Adicionar testes de exportação/importação de dados
-- Criar comandos customizados para reduzir repetição de código
