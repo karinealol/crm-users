@@ -11,9 +11,22 @@
     "dev": "tsc -w"
   },
   "devDependencies": {
+    "cypress": "^15.17.0",
     "typescript": "^5.5.0"
   },
   "dependencies": {
     "zod": "^4.4.3"
-  }
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karinealol/crm-users.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/karinealol/crm-users/issues"
+  },
+  "homepage": "https://github.com/karinealol/crm-users#readme"
 }
